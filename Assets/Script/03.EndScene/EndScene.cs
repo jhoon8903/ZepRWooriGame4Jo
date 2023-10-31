@@ -7,6 +7,7 @@ public class EndScene : MonoBehaviour
 {
     //button.onclick.AddListner() 사용해보려고 시도...
     //Button restartBtn;
+    public List<Sprite> members = new List<Sprite>();
     public void Restart()
     {
         //restartBtn = transform.GetChild(0).GetComponent<Button>();

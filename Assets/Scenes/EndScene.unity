@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 376713714}
   - component: {fileID: 376713713}
   - component: {fileID: 376713712}
-  - component: {fileID: 376713715}
   m_Layer: 5
   m_Name: exitBtn
   m_TagString: Untagged
@@ -207,7 +206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 376713715}
+      - m_Target: {fileID: 1111385761}
         m_TargetAssemblyTypeName: EndScene, Assembly-CSharp
         m_MethodName: Exit
         m_Mode: 1
@@ -257,18 +256,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376713710}
   m_CullTransparentMesh: 1
---- !u!114 &376713715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376713710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd575de4a4c93454595a3f310541965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +349,6 @@ GameObject:
   m_Component:
   - component: {fileID: 666258298}
   - component: {fileID: 666258297}
-  - component: {fileID: 666258299}
   m_Layer: 0
   m_Name: Member1
   m_TagString: Untagged
@@ -435,25 +421,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &666258299
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 666258296}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a426e9ea2b23d444f81cba4f3ac7b0b7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &846985527
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,6 +897,7 @@ GameObject:
   - component: {fileID: 1111385760}
   - component: {fileID: 1111385759}
   - component: {fileID: 1111385758}
+  - component: {fileID: 1111385761}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1019,6 +987,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1111385761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111385756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd575de4a4c93454595a3f310541965b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  members: []
 --- !u!1 &1346304113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,7 +1180,6 @@ GameObject:
   - component: {fileID: 1450188950}
   - component: {fileID: 1450188949}
   - component: {fileID: 1450188951}
-  - component: {fileID: 1450188952}
   m_Layer: 5
   m_Name: restartBtn
   m_TagString: Untagged
@@ -1309,7 +1289,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1450188952}
+      - m_Target: {fileID: 1111385761}
         m_TargetAssemblyTypeName: EndScene, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
@@ -1321,18 +1301,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1450188952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450188947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd575de4a4c93454595a3f310541965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1505856615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1329,7 @@ Animator:
   m_GameObject: {fileID: 1505856615}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a426e9ea2b23d444f81cba4f3ac7b0b7, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
