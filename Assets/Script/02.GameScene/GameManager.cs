@@ -33,7 +33,7 @@ namespace Script._02.GameScene
 
         private void Start()
         {
-            cardManager.ShuffleCard();
+            // cardManager.ShuffleCard();
         }
 
         private void End()
