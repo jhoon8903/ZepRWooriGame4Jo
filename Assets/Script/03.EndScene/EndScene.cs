@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EneScene : MonoBehaviour
+public class EndScene : MonoBehaviour
 {
     //button.onclick.AddListner() 사용해보려고 시도...
     //Button restartBtn;
-    void Restart()
+    public void Restart()
     {
         //restartBtn = transform.GetChild(0).GetComponent<Button>();
         //restartBtn.onClick.AddListener(() => SceneManager.LoadScene("PlayScene"));
-        SceneManager.LoadScene("PlayScene");
+
+        // 게임플레이 화면으로
+        SceneManager.LoadScene("Game");
     }
 
-    void Exit()
+    public void Exit()
     {
         //button.onClick.AddListener();
-        SceneManager.LoadScene("MainScene");
+
+        // 메인화면으로
+        SceneManager.LoadScene("Start");
     }
 }
