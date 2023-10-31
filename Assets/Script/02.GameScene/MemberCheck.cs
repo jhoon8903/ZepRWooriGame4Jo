@@ -4,15 +4,5 @@ using UnityEngine;
 
 public class MemberCheck : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // ³ªÀç¹Î
 }
