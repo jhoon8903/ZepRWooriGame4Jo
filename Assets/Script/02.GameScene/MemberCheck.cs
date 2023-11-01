@@ -1,50 +1,113 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class MemberCheck : MonoBehaviour
+/*
+ * by ì •í›ˆ
+ * name Space ì ìš©
+ */
+namespace Script._02.GameScene
 {
-    public GameObject[] namePanel = new GameObject[6];
-
-    // °°Àº Ä«µå°¡ µÚÁıÈ÷¸é, ÀÌ¸§¿¡ Ç¥½Ã
-    public void CharactorActive(string name)
+    public class MemberCheck : MonoBehaviour
     {
-        // nameCheck0 : Á¤¼±±³
-        // nameCheck1 : ¹ÚÁ¤Çõ
-        // nameCheck2 : ¼±°Ç¿ì
-        // nameCheck3 : ³ªÀç¹Î
-        // nameCheck4 : ÀÌÁ¤ÈÆ
-        // nameCheck5 : ÀåÁöÈÄ
-        switch (name)
+        [Serializable]
+        public class NameTag
         {
-            case "charactor0": // Á¤¼±±³
-                namePanel[0].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
-                break;
-
-            case "charactor1": // ³ªÀç¹Î
-                namePanel[3].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
-                break;
-
-            case "charactor2": // ¹ÚÁ¤Çõ
-                namePanel[1].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
-                break;
-
-            case "charactor3": // ¼±°Ç¿ì
-                namePanel[2].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
-                break;
-
-            case "charactor4": // ÀÌÁ¤ÈÆ
-                namePanel[4].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
-                break;
-
-            case "charactor5": // ÀåÁöÈÄ
-                namePanel[5].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
-                break;
-
-            default:
-                break;
+            /*
+             * by ì •í›ˆ
+             * ê°ì²´ ì§€í–¥ ë°©ì‹ìœ¼ë¡œ ë©¤ë²„ ë°•ìŠ¤ì— ëŒ€í•œ classë¥¼ ìƒì„±í•˜ì—¬ ì¬ì‚¬ìš©ì„±ì„ ë†’í˜
+             */
+            public int memberNumber;
+            public Image checkerBox;
+            public Image checker;
         }
 
+        // public GameObject[] namePanel = new GameObject[6];
 
+        /*
+         * by ì •í›ˆ 
+         * classë¡œ ì„ ì–¸í•œ NameTag ë¦¬ìŠ¤íŠ¸ë¥¼ ì„ ì–¸ 
+         * Inspectorì—ì„œ ê°œë³„ í• ë‹¹
+         */
+        public List<NameTag> memberList = new List<NameTag>();
+
+        private void Start()
+        {
+            /*
+             * by ì •í›ˆ
+             * ì²´ì»¤ë°•ìŠ¤ ê²Œì„ ì‹œì‘ì‹œ ì´ˆê¸°í™” ì„¸íŒ…
+             */ 
+            foreach (var member in memberList)
+            {
+                member.checkerBox.GetComponent<Image>().color = new Color(255f, 233f, 0, 255f);
+                member.checker.gameObject.SetActive(false);
+            }
+        }
+
+        // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Ì¸ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
+        public void MatchMember(string memberName)
+        {
+            // nameCheck0 : ì •ì„ êµ
+            // nameCheck1 : ë°•ì •í˜
+            // nameCheck2 : ì„ ê±´ìš°
+            // nameCheck3 : ë‚˜ì¬ë¯¼
+            // nameCheck4 : ì´ì •í›ˆ
+            // nameCheck5 : ì¥ì§€í›„
+
+            /*
+             *by ì •í›ˆ
+             * ë°›ì•„ì˜¨ ë©¤ë²„ì˜ ì´ë¦„ì„ ìŠ¤í”Œë¦¿ í•˜ì—¬, ë’·ìë¦¬  ë¬¸ìì—´ë§Œ intë¡œ ë³€í˜•í•˜ì—¬ ì‚¬ìš©
+             */ 
+            string[] conversionName = memberName.Split('r');
+            int nameNumber = int.Parse(conversionName[1]);
+
+            /*
+             * by ì •í›ˆ
+             * Code ì¬ì‚¬ìš©ì„ ìœ„í•œ í•¨ìˆ˜ ìƒì„± 
+             */ 
+            Checker(nameNumber);
+
+            // ê¸°ì¡´ ì½”ë“œ
+            // switch (name)
+            // {
+            //     case "charactor0": // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            //         namePanel[0].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
+            //         break;
+            //     case "charactor1": // ï¿½ï¿½ï¿½ï¿½ï¿½
+            //         namePanel[3].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
+            //         break;
+            //     case "charactor2": // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            //         namePanel[1].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
+            //         break;
+            //     case "charactor3": // ï¿½ï¿½ï¿½Ç¿ï¿½
+            //         namePanel[2].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
+            //         break;
+            //     case "charactor4": // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            //         namePanel[4].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
+            //         break;
+            //     case "charactor5": // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            //         namePanel[5].gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 200 / 255f);
+            //         break;
+            //     default:
+            //         break;
+            // }
+        }
+
+        private void Checker(int nameNumber)
+        {
+            /*
+             * by ì •í›ˆ
+             * ë©¤ë²„ ë¦¬ìŠ¤íŠ¸ ì¤‘ memberNumberê°€ ë™ì¼í•œ ì˜¤ë¸Œì íŠ¸ë§Œ ì»¬ëŸ¬ ë° ì²´ì»¤ í™œì„±í™”
+             */ 
+            foreach (var member in memberList)
+            {
+                if (member.memberNumber == nameNumber)
+                {
+                    member.checkerBox.GetComponent<Image>().color = new Color(10f, 255f, 0f, 255f);
+                    member.checker.gameObject.SetActive(true);
+                }
+            }
+        }
     }
 }
