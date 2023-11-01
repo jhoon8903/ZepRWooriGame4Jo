@@ -1,19 +1,24 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Script._02.GameScene
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Card cardManager;
         public static GameManager Instance;
-        public int maxCount;
+        [SerializeField] private TextMeshProUGUI leftCountText;
+        [SerializeField] private TextMeshProUGUI selectCountText;
+        public int maxCount = 18;
         public int currentCount;
-        public int touchScore;
+        public int selectScore;
         public int highScore;
         private const string ScoreKey = "Score";
         private const string CurrentScoreKey = "CurrentScore";
+        
+        
 
         private void Awake()
         {
@@ -29,14 +34,25 @@ namespace Script._02.GameScene
             
             // 현재 카운트를 최대 카운트로 초기화 
             currentCount = maxCount;
+            leftCountText.text = $"남은 횟수 : {currentCount:00}";
+            selectScore = 0;
+            selectCountText.text = $"시도 횟수 : {selectScore:00}";
+
         }
 
         private void Start()
         {
-            // cardManager.ShuffleCard();
+            
+            CardManager.Instance.ShuffleCard();
         }
 
-        private void End()
+        public void UpdateText()
+        {
+            leftCountText.text = $"남은 횟수 : {currentCount:00}";
+            selectCountText.text = $"시도 횟수 : {selectScore:00}";
+        }
+
+        public void End()
         {
             // 카운트가 남아 있으면 리턴
             if (currentCount > 0) return;
@@ -44,13 +60,13 @@ namespace Script._02.GameScene
             // 화면 종료시 터치 스코어
             int highPoint = PlayerPrefs.GetInt(ScoreKey, highScore);
 
-            if (touchScore > highPoint)
+            if (selectScore > highPoint)
             {
-                PlayerPrefs.SetInt(ScoreKey, touchScore);
+                PlayerPrefs.SetInt(ScoreKey, selectScore);
             }
             else
             {
-                PlayerPrefs.SetInt(CurrentScoreKey, touchScore);
+                PlayerPrefs.SetInt(CurrentScoreKey, selectScore);
             }
 
             // 카운트가 0 또는 0보다 작으면 EndScene 호출

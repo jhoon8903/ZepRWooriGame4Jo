@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ namespace Script._02.GameScene
             public Image checker;
         }
 
+        [SerializeField] private Profile profile;
+
         // public GameObject[] namePanel = new GameObject[6];
 
         /*
@@ -40,7 +43,6 @@ namespace Script._02.GameScene
              */ 
             foreach (var member in memberList)
             {
-                member.checkerBox.GetComponent<Image>().color = new Color(255f, 233f, 0, 255f);
                 member.checker.gameObject.SetActive(false);
             }
         }
@@ -54,18 +56,11 @@ namespace Script._02.GameScene
             // nameCheck3 : 나재민
             // nameCheck4 : 이정훈
             // nameCheck5 : 장지후
-
-            /*
-             *by 정훈
-             * 받아온 멤버의 이름을 스플릿 하여, 뒷자리  문자열만 int로 변형하여 사용
-             */ 
-            string[] conversionName = memberName.Split('r');
-            int nameNumber = int.Parse(conversionName[1]);
-
             /*
              * by 정훈
              * Code 재사용을 위한 함수 생성 
-             */ 
+             */
+            int nameNumber = int.Parse(memberName);
             Checker(nameNumber);
 
             // 기존 코드
@@ -104,8 +99,9 @@ namespace Script._02.GameScene
             {
                 if (member.memberNumber == nameNumber)
                 {
-                    member.checkerBox.GetComponent<Image>().color = new Color(10f, 255f, 0f, 255f);
+                    member.checkerBox.GetComponent<Image>().color = new Color(0.0392f, 1f, 0f, 1f);
                     member.checker.gameObject.SetActive(true);
+                    profile.ProfileOpen(member.memberNumber);
                 }
             }
         }
