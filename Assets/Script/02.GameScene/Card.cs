@@ -10,14 +10,13 @@ public class Card : MonoBehaviour
     public GameObject Cards;
     public Animator anim;
     
-    // Start is called before the first frame update
     void Start()
     {
-        int[] charactor = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5 };
+        int[] charactor = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5 };   //
         charactor = charactor.OrderBy(item => Random.Range(-1.0f,1.0f)).ToArray();
 
         for (int i = 0; i < 12; i++)
-        {
+        {   
             GameObject newCard = Instantiate(Cards);
             newCard.transform.parent = GameObject.Find("Cards").transform;
             float x = (i % 3) * -1.6f + 7.7f;
@@ -30,7 +29,6 @@ public class Card : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -42,4 +40,5 @@ public class Card : MonoBehaviour
         transform.Find("Front").gameObject.SetActive(true);
         transform.Find("Back").gameObject.SetActive(false);
     }
+
 }
