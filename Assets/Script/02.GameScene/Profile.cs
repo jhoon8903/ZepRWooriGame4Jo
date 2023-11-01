@@ -1,105 +1,131 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class Profile : MonoBehaviour
+/*
+ * by 정훈
+ * NameSpace 지정
+ */
+namespace Script._02.GameScene
 {
-    public GameObject ProfileBox; // 프로파일 UI 지정
-
-    public GameObject ProfileImg1; // 프로파일 UI의 상단 이미지
-
-    public GameObject ProfileImg2; // 프로파일 UI의 하단 이미지
-
-    public Text Name; // 프로파일 UI 이름, MBTI 출력란
-
-    public Text ProfileText; // 프로파일 UI 내용 출력란
-
-    public int CardTypematch;
-
-    private List<TeamMember> teamMembers;
-
-
-
-
-    // Create a class to hold each row of data
-    public class TeamMember
+    public class Profile : MonoBehaviour
     {
-        public int Num;
-        public string Name;
-        public string Mbti;
-        public string Txt;
-    }
+        public GameObject ProfileBox; // 프로파일 UI 지정
 
-    void OnEnable()
-    {
-        // UI가 활성화될 때 호출됩니다.
-        LoadDataAndRefreshUI();
-    }
+        public GameObject ProfileImg1; // 프로파일 UI의 상단 이미지
 
-    public void LoadDataAndRefreshUI()
-    {
-        TextAsset teamData = Resources.Load<TextAsset>("Team4DB");
+        public GameObject ProfileImg2; // 프로파일 UI의 하단 이미지
 
-        string[] data = teamData.text.Split(new char[] { '\n' });
-        teamMembers = new List<TeamMember>();
+        public TextMeshProUGUI Name; // 프로파일 UI 이름, MBTI 출력란
 
-        for (int i = 1; i < data.Length; i++) // Skip the first row (header)
+        public TextMeshProUGUI ProfileText; // 프로파일 UI 내용 출력란
+
+        // public int CardTypematch;
+
+        private List<TeamMember> teamMembers;
+
+
+
+
+        // Create a class to hold each row of data
+        public class TeamMember
         {
-            string[] row = data[i].Split(new char[] { ',' });
-
-            TeamMember t = new TeamMember();
-            t.Num = int.Parse(row[0]);
-            t.Name = row[1];
-            t.Mbti = row[2];
-            t.Txt = row[3];
-
-            teamMembers.Add(t);
+            public int Num;
+            public string Name;
+            public string Mbti;
+            public string Txt;
         }
 
-        UpdateUI();
-    }
+        /*
+         * by 정훈
+         * 패널이 열릴때 데이터를 읽어 오는 것이 아닌
+         * 미리 데이터를 변수에 저장하여 해당 멤버의 데이터만 추후 패널이 활성화 되면 가지고 오는 방식이
+         * 좀 더 효과적
+         */
 
-    public void UpdateUI()
-    {
-
-        // Output the loaded data
-
-        foreach (TeamMember member in teamMembers)
+        private void Awake()
         {
-            if(CardTypematch == member.Num) // CardTypematch와 같은 번호의 데이터만 출력하도록 설정
+            LoadDataAndRefreshUI();
+        }
+
+        // void OnEnable()
+        // {
+        //     // UI가 활성화될 때 호출됩니다.
+        //     LoadDataAndRefreshUI();
+        // }
+
+        public void LoadDataAndRefreshUI()
+        {
+            TextAsset teamData = Resources.Load<TextAsset>("Team4DB");
+
+            string[] data = teamData.text.Split(new char[] { '\n' });
+            teamMembers = new List<TeamMember>();
+
+            for (int i = 1; i < data.Length; i++) // Skip the first row (header)
             {
-               string name = "이름 : ";
-               string mbtiType = "MBTI 유형 :";
-               string CardImgname1 = "ProfileImg/"+member.Name + "_S"; // 가져올 스프라이트 이름 설정
-               string CardImgname2 = "ProfileImg/"+member.Name; // 가져올 스프라이트 이름 설정
+                string[] row = data[i].Split(new char[] { ',' });
 
-                Sprite loadedSprite = Resources.Load<Sprite>(CardImgname1);// CardImgname와 동일한 이름의 이미지를 가져오도록 설정
-                Sprite loadedSprite2 = Resources.Load<Sprite>(CardImgname2);// CardImgname2와 동일한 이름의 이미지를 가져오도록 설정
+                TeamMember t = new TeamMember();
+                t.Num = int.Parse(row[0]);
+                t.Name = row[1];
+                t.Mbti = row[2];
+                t.Txt = row[3];
 
-                ProfileImg1.GetComponent<Image>().sprite = loadedSprite;
-                ProfileImg2.GetComponent<Image>().sprite = loadedSprite2;
-                Name.text = name + member.Name + '\n' + mbtiType + member.Mbti; // 이름 MBTI 이름 설정 지정
-                ProfileText.text = member.Txt; // 텍스트 설정 지정
-
-                Debug.Log(CardImgname2);
-                Debug.Log($"Num: {member.Num}, Name: {member.Name}, Mbti: {member.Mbti}, Txt: { member.Txt}");
-
+                teamMembers.Add(t);
             }
+
+            // UpdateUI();
         }
-    }
-    public void ProfileOpen()
-    {
-        ProfileBox.SetActive(true); // 닫기 버튼 클릭시 프로필 UI 닫기
 
-    }
+        /*
+         * by 정훈
+         * MemberCheck Class로 부터 매개변수룰 받아 해당하는 인원의 데이터를 불러오가
+         */
+        private void UpdateUI(int memberIndex)
+        {
 
-    public void Close()
-    {
-        ProfileBox.SetActive(false); // 닫기 버튼 클릭시 프로필 UI 닫기
+            // Output the loaded data
 
+            foreach (TeamMember member in teamMembers)
+            {
+                // 매개변수로 받은 Member Index와 비교하여 데이터 비교   
+                if(memberIndex == member.Num) 
+                {
+                    string name = "이름 : ";
+                    string mbtiType = "MBTI 유형 :";
+                    string CardImgname1 = "ProfileImg/"+member.Name + "_S"; // 가져올 스프라이트 이름 설정
+                    string CardImgname2 = "ProfileImg/"+member.Name; // 가져올 스프라이트 이름 설정
+
+                    Sprite loadedSprite = Resources.Load<Sprite>(CardImgname1);// CardImgname와 동일한 이름의 이미지를 가져오도록 설정
+                    Sprite loadedSprite2 = Resources.Load<Sprite>(CardImgname2);// CardImgname2와 동일한 이름의 이미지를 가져오도록 설정
+
+                    ProfileImg1.GetComponent<Image>().sprite = loadedSprite;
+                    ProfileImg2.GetComponent<Image>().sprite = loadedSprite2;
+                    Name.text = name + member.Name + '\n' + mbtiType + member.Mbti; // 이름 MBTI 이름 설정 지정
+                    ProfileText.text = member.Txt; // 텍스트 설정 지정
+
+                    Debug.Log(CardImgname2);
+                    Debug.Log($"Num: {member.Num}, Name: {member.Name}, Mbti: {member.Mbti}, Txt: { member.Txt}");
+
+                }
+            }
+           
+        }
+
+        public void ProfileOpen(int memberIndex)
+        {
+            ProfileBox.SetActive(true); // 닫기 버튼 클릭시 프로필 UI 닫기
+            UpdateUI(memberIndex);
+
+        }
+
+        public void Close()
+        {
+            ProfileBox.SetActive(false); // 닫기 버튼 클릭시 프로필 UI 닫기
+
+        }
     }
 
     private void Start()

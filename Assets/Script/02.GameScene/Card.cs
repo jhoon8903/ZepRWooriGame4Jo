@@ -1,80 +1,167 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
-using Script._02.GameScene;
-using DG.Tweening.Core.Easing;
 
-public class Card : MonoBehaviour
+namespace Script._02.GameScene
 {
-    public Animator anim;
-
-
-    // Update is called once per frame
-    void Update()
+    public class Card : MonoBehaviour
     {
-        if (Input.GetMouseButtonDown(0)) // left mouse button
+        public Animator anim;
+
+        /*
+         * by 정훈
+         * Card class의 객체 생성
+         * Card Manager 참조
+         */
+        public GameObject card;
+        public Sprite backSprite;
+        public Sprite frontSprite;
+        public GameObject character;
+        private AudioSource _flipSound;
+
+        private void Awake()
         {
-            Vector2 rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f);
+            _flipSound = GetComponent<AudioSource>();
+        }
 
-            // Debug.Log($"hit Object : {hit.transform.gameObject}");
-            // Debug.Log($"gameObject: {gameObject}");
-
-            if (hit.transform != null && gameObject != null)
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0)) // left mouse button
             {
-                if (hit.transform.gameObject == gameObject)
+                Vector2 rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f);
+
+                /*
+                 * by 정훈
+                 * 같은 카드를 두변 연속으로 클릭하면 같은 카드로 인식해 매치가 진행되는 버그 해결
+                 */
+                if (CardManager.Instance.SecondSelectCard == null)
                 {
-                    Debug.Log("You clicked on: " + hit.transform.name); 
-                    OpenCard();
+                    if (hit.transform != null && gameObject != null)
+                    {
+                        if (hit.transform.gameObject == gameObject)
+                        {
+                            // 첫 번째 선택한 카드와 두 번째 선택한 카드가 같은지 확인
+                            if (CardManager.Instance.FirstSelectCard != null && 
+                                CardManager.Instance.FirstSelectCard == this)
+                            {
+                                // 같은 카드를 두 번 클릭했으므로 무시
+                                return;
+                            }
+
+                            // 카드를 열고 처리
+                            OpenCard(this);
+                        }
+                    }
                 }
             }
-            else
-            {
-                Debug.Log("Null Area");
-            }
-    
         }
-    }
 
 
-    public void OpenCard()
-    {
-        anim.SetBool("CardOpen", true);
-        transform.Find("Front").gameObject.SetActive(true);
-        transform.Find("Back").gameObject.SetActive(false);
 
-        if (CardManager.I.firstCard == null)
+        private void OpenCard(Card selectCard)
         {
-            CardManager.I.firstCard = gameObject;
+            /*
+             * by 정훈
+             * 현재 카운트가 0 이하이면 EndScene으로 이동
+             */
+            // anim.SetBool("CardOpen", true);
+                /*
+                 * by 정훈
+                 * 스크립트에서 해당 오브젝트를 미리 할당하여 Find 메소드로 인한 리소스 소모 최적화
+                 * DOTween을 이용한 Card Flip 효과 구현
+                 */
+
+            // 카드 초기화
+            card.GetComponent<SpriteRenderer>().sprite = backSprite;
+            // 카드 Flip
+            _flipSound.Play();
+            float duration = 0.7f;
+            transform.DORotate(new Vector3(0, 180, 0), duration)
+                .SetEase(Ease.Linear)
+                .OnUpdate(() =>
+                {
+                    if (transform.rotation.eulerAngles.y >= 90)
+                    {
+                        card.GetComponent<SpriteRenderer>().sprite = frontSprite;
+                        character.SetActive(true);
+                    }
+                }).OnComplete(() =>
+                {
+                    if (CardManager.Instance.FirstSelectCard == null)
+                    {
+                        CardManager.Instance.FirstSelectCard = selectCard;
+                    }
+                    else if (CardManager.Instance.FirstSelectCard != null && CardManager.Instance.SecondSelectCard == null)
+                    {
+                        CardManager.Instance.SecondSelectCard = selectCard;
+                        GameManager.Instance.selectScore++;
+                        GameManager.Instance.currentCount--;
+                        GameManager.Instance.UpdateText();
+                        StartCoroutine(DelayedIsMatched());
+                        if (GameManager.Instance.currentCount <= 0)
+                        {
+                            StartCoroutine(GameManager.Instance.End());
+                        }
+                    }
+                });
+     
         }
-        else
+
+        private IEnumerator DelayedIsMatched()
         {
-            CardManager.I.secondCard = gameObject;
-            CardManager.I.isMatched();
+            /*
+             * by 정훈
+             * 매치 확인 시 매치가 되면 카드가 바로 없어지는 것 처럼 보여 0.3초간의 텀을 주고 확인
+             */
+            yield return new WaitForSecondsRealtime(0.3f);
+            CardManager.Instance.IsMatched();
         }
-    }
-    public void destroyCard()
-    {
-        Invoke("destroyCardInvoke", 1.0f);
-    }
 
-    void destroyCardInvoke()
-    {
-        Destroy(gameObject);
-    }
+        // public void destroyCard()
+        // {
+        //     Invoke("destroyCardInvoke", 1.0f);
+        // }
+        //
+        // void destroyCardInvoke()
+        // {
+        //     Destroy(gameObject);
+        // }
 
-    public void closeCard()
-    {
-        Invoke("closeCardInvoke", 1.0f);
-    }
+        /*
+         * by 정훈 
+         * 함수 선언 규칙 UpperCase
+         */
+        public void CloseCard()
+        {
+            Invoke(nameof(CloseCardInvoke), 1.0f);
+        }
 
-    void closeCardInvoke()
-    {
-        anim.SetBool("CardOpen", false);
-        transform.Find("Back").gameObject.SetActive(true);
-        transform.Find("Front").gameObject.SetActive(false);
-    }
+        private void CloseCardInvoke()
+        {
+            // anim.SetBool("CardOpen", false);
+            /*
+             * by 정훈
+             * Find 메소드 최적화
+             */
+            float duration = 0.3f;
+            _flipSound.Play();
+            transform.DORotate(new Vector3(0, 0, 0), duration).SetEase(Ease.Linear).OnUpdate(() =>
+                {
+                    if (transform.rotation.eulerAngles.y <= 90)
+                    {
+                        card.GetComponent<SpriteRenderer>().sprite = backSprite;
+                        character.SetActive(false);
+                    }
+                });
 
+            // transform.Find("Back").gameObject.SetActive(true);
+            // transform.Find("Front").gameObject.SetActive(false);
+            
+            // backCard.SetActive(true);
+            // frontCard.SetActive(false);
+        }
+
+    }
 }
