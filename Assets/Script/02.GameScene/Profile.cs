@@ -90,10 +90,13 @@ public class Profile : MonoBehaviour
             }
         }
     }
+    public void ProfileOpen()
+    {
+        ProfileBox.SetActive(true); // 닫기 버튼 클릭시 프로필 UI 닫기
 
+    }
 
     public void Close()
-
     {
         ProfileBox.SetActive(false); // 닫기 버튼 클릭시 프로필 UI 닫기
 
