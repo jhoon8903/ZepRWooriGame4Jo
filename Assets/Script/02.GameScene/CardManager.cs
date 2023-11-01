@@ -1,3 +1,4 @@
+using Script._02.GameScene;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,15 @@ using UnityEngine;
 public class CardManager : MonoBehaviour
 {
     public GameObject card;
+    public GameObject firstCard;
+    public GameObject secondCard;
+
+    public static CardManager I;
+
+    void Awake()
+    {
+        I = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +34,30 @@ public class CardManager : MonoBehaviour
 
             string charName = "charactor" + charactor[i].ToString();
 
-            newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(charName);
+            newCard.transform.Find("Front").transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(charName);
         }
+
     }
 
+    public void isMatched()
+    {
+        string firstCardImage = firstCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
+        string secondCardImage = secondCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
 
+        if (firstCardImage == secondCardImage)
+        {
+            firstCard.GetComponent<Card>().destroyCard();
+            secondCard.GetComponent<Card>().destroyCard();
+        }
+        else
+        {
+            firstCard.GetComponent<Card>().closeCard();
+            secondCard.GetComponent<Card>().closeCard();
+        }
+
+        firstCard = null;
+        secondCard = null;
+    }
 
 
 }
