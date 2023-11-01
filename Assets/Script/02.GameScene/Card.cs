@@ -6,18 +6,25 @@ using System.Linq;
 
 public class Card : MonoBehaviour
 {
-    public GameObject card;
     public Animator anim;
-    
-    void Start()
-    {
-        
-    }
 
+    // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0)) // left mouse button
+        {
+            Vector2 rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f);
 
+            if (hit.transform.gameObject == gameObject)
+            {
+                Debug.Log("You clicked on: " + hit.transform.name); 
+                OpenCard();
+            }
+        }
     }
+
+
     public void OpenCard()
     {
         Debug.Log("Click");
