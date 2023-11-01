@@ -3,13 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 public class EndScenejj : MonoBehaviour
 {
-    //button.onclick.AddListner()
-    //Button restartBtn;
     public GameObject memberCharacter;
+    public Button restartBtn;
+    public Button exitBtn;
+
+    private void Awake()
+    {
+        restartBtn.onClick.AddListener(Restart);
+        exitBtn.onClick.AddListener(Exit);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,16 +36,11 @@ public class EndScenejj : MonoBehaviour
     }
     public void Restart()
     {
-        //restartBtn = transform.GetChild(0).GetComponent<Button>();
-        //restartBtn.onClick.AddListener(() => SceneManager.LoadScene("PlayScene"));
-
         SceneManager.LoadScene("Game");
     }
 
     public void Exit()
     {
-        //button.onClick.AddListener();
-
         SceneManager.LoadScene("Start");
     }
 }
