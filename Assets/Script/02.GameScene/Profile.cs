@@ -19,6 +19,8 @@ public class Profile : MonoBehaviour
 
     public int CardTypematch;
 
+    private List<TeamMember> teamMembers;
+
 
 
 
@@ -31,18 +33,18 @@ public class Profile : MonoBehaviour
         public string Txt;
     }
 
-    void Start()
+    void OnEnable()
     {
-
+        // UI가 활성화될 때 호출됩니다.
+        LoadDataAndRefreshUI();
     }
 
-    void Update()
+    public void LoadDataAndRefreshUI()
     {
-
         TextAsset teamData = Resources.Load<TextAsset>("Team4DB");
 
         string[] data = teamData.text.Split(new char[] { '\n' });
-        List<TeamMember> teamMembers = new List<TeamMember>();
+        teamMembers = new List<TeamMember>();
 
         for (int i = 1; i < data.Length; i++) // Skip the first row (header)
         {
@@ -56,6 +58,12 @@ public class Profile : MonoBehaviour
 
             teamMembers.Add(t);
         }
+
+        UpdateUI();
+    }
+
+    public void UpdateUI()
+    {
 
         // Output the loaded data
 
@@ -80,7 +88,6 @@ public class Profile : MonoBehaviour
                 Debug.Log($"Num: {member.Num}, Name: {member.Name}, Mbti: {member.Mbti}, Txt: { member.Txt}");
 
             }
-
         }
     }
 
