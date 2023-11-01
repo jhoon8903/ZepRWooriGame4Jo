@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 1905594841989199866}
   - component: {fileID: 441388132181296375}
   - component: {fileID: 5934693102080127538}
-  - component: {fileID: -4600465729227656079}
+  - component: {fileID: -6980887347896283025}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -187,7 +187,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-4600465729227656079
+--- !u!114 &-6980887347896283025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
