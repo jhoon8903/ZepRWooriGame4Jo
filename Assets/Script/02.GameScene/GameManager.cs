@@ -57,10 +57,10 @@ namespace Script._02.GameScene
         {
             // 카운트가 남아 있으면 리턴
             if (currentCount > 0) yield break;
-
+        
             // 화면 종료시 터치 스코어
             int highPoint = PlayerPrefs.GetInt(ScoreKey, highScore);
-
+        
             if (selectScore > highPoint)
             {
                 PlayerPrefs.SetInt(ScoreKey, selectScore);
@@ -69,7 +69,7 @@ namespace Script._02.GameScene
             {
                 PlayerPrefs.SetInt(CurrentScoreKey, selectScore);
             }
-
+        
             yield return new WaitForSecondsRealtime(1.0f);
             // 카운트가 0 또는 0보다 작으면 EndScene 호출
             SceneManager.LoadScene("EndScene");

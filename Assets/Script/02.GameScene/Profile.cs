@@ -26,6 +26,8 @@ namespace Script._02.GameScene
 
         private List<TeamMember> teamMembers;
 
+        public Button closeBtn;
+
 
 
 
@@ -48,8 +50,8 @@ namespace Script._02.GameScene
         private void Awake()
         {
             LoadDataAndRefreshUI();
+            closeBtn.onClick.AddListener(Close);
         }
-
         // void OnEnable()
         // {
         //     // UI가 활성화될 때 호출됩니다.
@@ -116,21 +118,18 @@ namespace Script._02.GameScene
 
         public void ProfileOpen(int memberIndex)
         {
-            ProfileBox.SetActive(true); // 닫기 버튼 클릭시 프로필 UI 닫기
+            ProfileBox.SetActive(true); // 패널 활성화
             UpdateUI(memberIndex);
 
         }
 
         public void Close()
         {
+            CardManager.Instance.cardFlipCount = 0;
+            Debug.Log($"Count : {CardManager.Instance.cardFlipCount}");
+            CardManager.Instance.FirstSelectCard = null;
+            CardManager.Instance.SecondSelectCard = null;
             ProfileBox.SetActive(false); // 닫기 버튼 클릭시 프로필 UI 닫기
-
         }
-    }
-
-    private void Start()
-    {
-
-        ProfileBox.SetActive(false);
     }
 }

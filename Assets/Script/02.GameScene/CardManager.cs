@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 /*
@@ -25,6 +26,8 @@ namespace Script._02.GameScene
         private readonly List<Card> _cardList = new List<Card>();
 
         private AudioSource _shuffleSound;
+
+        public int cardFlipCount;
 
         /*
          * card Instance에서 접근하기 위한 SingleTon 생성
@@ -136,8 +139,6 @@ namespace Script._02.GameScene
                 FirstSelectCard.CloseCard();
                 SecondSelectCard.CloseCard();
             }
-            FirstSelectCard = null;
-            SecondSelectCard = null;
         }
     }
 }

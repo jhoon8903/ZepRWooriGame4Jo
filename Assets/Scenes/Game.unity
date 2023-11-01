@@ -937,6 +937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 7142447524560895976, guid: 378fdffcf278bf64a9fec7c6cbb685b6, type: 3}
+  cardFlipCount: 0
   memberCheck: {fileID: 206320479}
 --- !u!4 &349987556
 Transform:
@@ -1242,7 +1243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -129.20001}
+  m_AnchoredPosition: {x: 0, y: -129.19995}
   m_SizeDelta: {x: 500, y: 70}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &711435150
@@ -2432,7 +2433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftCountText: {fileID: 1869551361}
   selectCountText: {fileID: 711435150}
-  maxCount: 4
+  maxCount: 10
   currentCount: 0
   selectScore: 0
   highScore: 0
@@ -3274,7 +3275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -30}
+  m_AnchoredPosition: {x: 0, y: -30}
   m_SizeDelta: {x: 500, y: 70}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1869551361
@@ -3826,19 +3827,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7755352994378710502}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4544005727234727336}
-        m_TargetAssemblyTypeName: Script._02.GameScene.Profile, Assembly-CSharp
-        m_MethodName: Close
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &4544005726615018704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4046,7 +4035,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
 --- !u!114 &4544005727234727334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4079,7 +4068,7 @@ Canvas:
   m_GameObject: {fileID: 4544005727234727332}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -4087,9 +4076,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_AdditionalShaderChannelsFlag: -1
+  m_SortingLayerID: -1460117151
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &4544005727234727336
 MonoBehaviour:
@@ -4108,6 +4097,7 @@ MonoBehaviour:
   ProfileImg2: {fileID: 4544005726615018710}
   Name: {fileID: 5423652}
   ProfileText: {fileID: 1565732454}
+  closeBtn: {fileID: 4129518855265432855}
 --- !u!1 &4544005727278586592
 GameObject:
   m_ObjectHideFlags: 0

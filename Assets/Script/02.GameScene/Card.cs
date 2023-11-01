@@ -20,6 +20,8 @@ namespace Script._02.GameScene
         public GameObject character;
         private AudioSource _flipSound;
 
+      
+
         private void Awake()
         {
             _flipSound = GetComponent<AudioSource>();
@@ -27,29 +29,47 @@ namespace Script._02.GameScene
 
         void Update()
         {
+           
+            
             if (Input.GetMouseButtonDown(0)) // left mouse button
             {
+                if (CardManager.Instance.cardFlipCount >=2) return;
                 Vector2 rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f);
+
+                // if(hit.transform != null)
+                // {
+                //     Debug.Log("Hit Object: " + hit.transform.name); // Log the name of the object hit by the raycast
+                //     Debug.Log($"Count ; {CardManager.Instance.cardFlipCount}");
+                // }
+                // else
+                // {
+                //     Debug.Log("No hit");
+                //     Debug.Log($"Count ; {CardManager.Instance.cardFlipCount}");
+                // }
 
                 /*
                  * by 정훈
                  * 같은 카드를 두변 연속으로 클릭하면 같은 카드로 인식해 매치가 진행되는 버그 해결
                  */
+                
                 if (CardManager.Instance.SecondSelectCard == null)
                 {
+                    Debug.Log("1");
                     if (hit.transform != null && gameObject != null)
-                    {
+                    {    
+                        Debug.Log("2");
                         if (hit.transform.gameObject == gameObject)
                         {
+                            Debug.Log("3");
                             // 첫 번째 선택한 카드와 두 번째 선택한 카드가 같은지 확인
                             if (CardManager.Instance.FirstSelectCard != null && 
                                 CardManager.Instance.FirstSelectCard == this)
                             {
+                                Debug.Log("4");
                                 // 같은 카드를 두 번 클릭했으므로 무시
                                 return;
                             }
-
                             // 카드를 열고 처리
                             OpenCard(this);
                         }
@@ -61,7 +81,9 @@ namespace Script._02.GameScene
 
 
         private void OpenCard(Card selectCard)
-        {
+        { 
+            Debug.Log("OpenCard");
+            CardManager.Instance.cardFlipCount++;
             /*
              * by 정훈
              * 현재 카운트가 0 이하이면 EndScene으로 이동
@@ -75,6 +97,7 @@ namespace Script._02.GameScene
 
             // 카드 초기화
             card.GetComponent<SpriteRenderer>().sprite = backSprite;
+            
             // 카드 Flip
             _flipSound.Play();
             float duration = 0.7f;
@@ -82,6 +105,7 @@ namespace Script._02.GameScene
                 .SetEase(Ease.Linear)
                 .OnUpdate(() =>
                 {
+              
                     if (transform.rotation.eulerAngles.y >= 90)
                     {
                         card.GetComponent<SpriteRenderer>().sprite = frontSprite;
@@ -95,6 +119,7 @@ namespace Script._02.GameScene
                     }
                     else if (CardManager.Instance.FirstSelectCard != null && CardManager.Instance.SecondSelectCard == null)
                     {
+                        
                         CardManager.Instance.SecondSelectCard = selectCard;
                         GameManager.Instance.selectScore++;
                         GameManager.Instance.currentCount--;
@@ -154,13 +179,20 @@ namespace Script._02.GameScene
                         card.GetComponent<SpriteRenderer>().sprite = backSprite;
                         character.SetActive(false);
                     }
-                });
+                }).OnComplete(() =>
+            {
+                CardManager.Instance.FirstSelectCard = null;
+                CardManager.Instance.SecondSelectCard = null;
+                CardManager.Instance.cardFlipCount--;
+                Debug.Log($"Count : {CardManager.Instance.cardFlipCount}");
+            });
 
             // transform.Find("Back").gameObject.SetActive(true);
             // transform.Find("Front").gameObject.SetActive(false);
             
             // backCard.SetActive(true);
             // frontCard.SetActive(false);
+            // _cardFlipingCount = 0;
         }
 
     }

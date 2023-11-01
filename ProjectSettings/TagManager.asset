@@ -48,3 +48,6 @@ TagManager:
   - name: Card
     uniqueID: 3879394757
     locked: 0
+  - name: Profile
+    uniqueID: 2834850145
+    locked: 0
