@@ -19,11 +19,22 @@ public class Card : MonoBehaviour
             Vector2 rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f);
 
-            if (hit.transform.gameObject == gameObject)
+            // Debug.Log($"hit Object : {hit.transform.gameObject}");
+            // Debug.Log($"gameObject: {gameObject}");
+
+            if (hit.transform != null && gameObject != null)
             {
-                Debug.Log("You clicked on: " + hit.transform.name); 
-                OpenCard();
+                if (hit.transform.gameObject == gameObject)
+                {
+                    Debug.Log("You clicked on: " + hit.transform.name); 
+                    OpenCard();
+                }
             }
+            else
+            {
+                Debug.Log("Null Area");
+            }
+    
         }
     }
 

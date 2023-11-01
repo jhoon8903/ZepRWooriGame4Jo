@@ -41,8 +41,8 @@ public class CardManager : MonoBehaviour
 
     public void isMatched()
     {
-        string firstCardImage = firstCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
-        string secondCardImage = secondCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite.name;
+        string firstCardImage = firstCard.transform.Find("Front").transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
+        string secondCardImage = secondCard.transform.Find("Front").transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
 
         if (firstCardImage == secondCardImage)
         {
