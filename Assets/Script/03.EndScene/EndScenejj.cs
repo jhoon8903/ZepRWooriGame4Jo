@@ -1,46 +1,87 @@
-using DG.Tweening;
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
 
-public class EndScenejj : MonoBehaviour
+namespace Script._03.EndScene
 {
-    public GameObject memberCharacter;
-    public Button restartBtn;
-    public Button exitBtn;
+    public class EndScenejj : MonoBehaviour
+    {
+        // public GameObject memberCharacter;
+        public Button restartBtn;
+        public Button exitBtn;
 
-    private void Awake()
-    {
-        restartBtn.onClick.AddListener(Restart);
-        exitBtn.onClick.AddListener(Exit);
-    }
+        public GameObject endingCredit;
+        private TextMeshProUGUI _creditText;
+        public float colorChangeDuration = 1.0f;
+        public Vector3 circleCenter = new Vector3(0, 0, 0);
+        public float radius = 1.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // memberCharacter.transform.DOMoveY(1, 1).SetLoops(-1, LoopType.Restart);
-        Sequence moveSequence = DOTween.Sequence();
-        moveSequence.Append(memberCharacter.transform.DOMoveY(1, 0.3f)); // Y ÁÂÇ¥¸¦ 1·Î ÀÌµ¿
-        moveSequence.Append(memberCharacter.transform.DOMoveY(0, 0.5f)); // Y ÁÂÇ¥¸¦ 0À¸·Î ÀÌµ¿
-        moveSequence.AppendInterval(0.5f);
-        moveSequence.SetLoops(-1, LoopType.Restart); // ·çÇÁ ¼³Á¤
-    }
+        private void Awake()
+        {
+            restartBtn.onClick.AddListener(Restart);
+            exitBtn.onClick.AddListener(Exit);
+            _creditText = endingCredit.GetComponent<TextMeshProUGUI>();
+            circleCenter = endingCredit.transform.position;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void Restart()
-    {
-        SceneManager.LoadScene("Game");
-    }
+        private void Start()
+        {
+            /*
+             * by ì •í›ˆ
+             * ì¡° ì´ë¦„ íšŒì „ ë° ì»¬ëŸ¬ ë³€ê²½
+             */
+            StartCoroutine(MoveInCircle());
+            DOTween.To(() => _creditText.color, x => _creditText.color = x, new Color(Random.value, Random.value, Random.value, 1), colorChangeDuration)
+                .SetLoops(-1, LoopType.Yoyo)
+                .OnStepComplete(() =>
+                {
+                    DOTween.To(() => _creditText.color, x => _creditText.color = x, new Color(Random.value, Random.value, Random.value, 1), colorChangeDuration);
+                });
+        }
 
-    public void Exit()
-    {
-        SceneManager.LoadScene("Start");
+        private IEnumerator MoveInCircle()
+        {
+            Vector3 originalPosition = circleCenter;
+            float timer = 0.0f;
+            float circleDuration = 5.0f;
+
+            while (true)
+            {
+                float angle = timer / circleDuration * 360 * Mathf.Deg2Rad;
+                Vector3 offset = new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0);
+                endingCredit.transform.position = originalPosition + offset;
+
+                timer += Time.deltaTime;
+                if (timer > circleDuration) timer -= circleDuration;
+
+                yield return null;
+            }
+        }
+
+        // Start is called before the first frame update
+        // void Start()
+        // {
+        //     // memberCharacter.transform.DOMoveY(1, 1).SetLoops(-1, LoopType.Restart);
+        //     Sequence moveSequence = DOTween.Sequence();
+        //     moveSequence.Append(memberCharacter.transform.DOMoveY(1, 0.3f)); // Y ï¿½ï¿½Ç¥ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ìµï¿½
+        //     moveSequence.Append(memberCharacter.transform.DOMoveY(0, 0.5f)); // Y ï¿½ï¿½Ç¥ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+        //     moveSequence.AppendInterval(0.5f);
+        //     moveSequence.SetLoops(-1, LoopType.Restart); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // }
+
+        public void Restart()
+        {
+            SceneManager.LoadScene("Game");
+        }
+
+        public void Exit()
+        {
+            SceneManager.LoadScene("Start");
+        }
     }
 }

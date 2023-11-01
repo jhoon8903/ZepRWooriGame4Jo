@@ -100,12 +100,13 @@ namespace Script._02.GameScene
                         GameManager.Instance.currentCount--;
                         GameManager.Instance.UpdateText();
                         StartCoroutine(DelayedIsMatched());
+                        if (GameManager.Instance.currentCount <= 0)
+                        {
+                            StartCoroutine(GameManager.Instance.End());
+                        }
                     }
                 });
-            if (GameManager.Instance.currentCount <= 0)
-            {
-                GameManager.Instance.End();
-            }
+     
         }
 
         private IEnumerator DelayedIsMatched()
