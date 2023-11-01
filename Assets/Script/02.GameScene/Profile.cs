@@ -1,25 +1,94 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Profile : MonoBehaviour
 {
-    public GameObject ProfileBox; // ÇÁ·ÎÆÄÀÏ UI ÁöÁ¤
+    public GameObject ProfileBox; // í”„ë¡œíŒŒì¼ UI ì§€ì •
 
-    public GameObject ProfileImg1; // ÇÁ·ÎÆÄÀÏ UIÀÇ »ó´Ü ÀÌ¹ÌÁö
+    public GameObject ProfileImg1; // í”„ë¡œíŒŒì¼ UIì˜ ìƒë‹¨ ì´ë¯¸ì§€
 
-    public GameObject ProfileImg2; // ÇÁ·ÎÆÄÀÏ UIÀÇ ÇÏ´Ü ÀÌ¹ÌÁö
+    public GameObject ProfileImg2; // í”„ë¡œíŒŒì¼ UIì˜ í•˜ë‹¨ ì´ë¯¸ì§€
 
-    public Text Name; // ÇÁ·ÎÆÄÀÏ UI ÀÌ¸§, MBTI Ãâ·Â¶õ
+    public Text Name; // í”„ë¡œíŒŒì¼ UI ì´ë¦„, MBTI ì¶œë ¥ë€
 
-    public Text ProfileText; // ÇÁ·ÎÆÄÀÏ UI ³»¿ë Ãâ·Â¶õ
+    public Text ProfileText; // í”„ë¡œíŒŒì¼ UI ë‚´ìš© ì¶œë ¥ë€
+
+    public int CardTypematch;
+
+
+
+
+    // Create a class to hold each row of data
+    public class TeamMember
+    {
+        public int Num;
+        public string Name;
+        public string Mbti;
+        public string Txt;
+    }
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+        TextAsset teamData = Resources.Load<TextAsset>("Team4DB");
+
+        string[] data = teamData.text.Split(new char[] { '\n' });
+        List<TeamMember> teamMembers = new List<TeamMember>();
+
+        for (int i = 1; i < data.Length; i++) // Skip the first row (header)
+        {
+            string[] row = data[i].Split(new char[] { ',' });
+
+            TeamMember t = new TeamMember();
+            t.Num = int.Parse(row[0]);
+            t.Name = row[1];
+            t.Mbti = row[2];
+            t.Txt = row[3];
+
+            teamMembers.Add(t);
+        }
+
+        // Output the loaded data
+
+        foreach (TeamMember member in teamMembers)
+        {
+            if(CardTypematch == member.Num) // CardTypematchì™€ ê°™ì€ ë²ˆí˜¸ì˜ ë°ì´í„°ë§Œ ì¶œë ¥í•˜ë„ë¡ ì„¤ì •
+            {
+               string name = "ì´ë¦„ : ";
+               string mbtiType = "MBTI ìœ í˜• :";
+               string CardImgname1 = "ProfileImg/"+member.Name + "_S"; // ê°€ì ¸ì˜¬ ìŠ¤í”„ë¼ì´íŠ¸ ì´ë¦„ ì„¤ì •
+               string CardImgname2 = "ProfileImg/"+member.Name; // ê°€ì ¸ì˜¬ ìŠ¤í”„ë¼ì´íŠ¸ ì´ë¦„ ì„¤ì •
+
+                Sprite loadedSprite = Resources.Load<Sprite>(CardImgname1);// CardImgnameì™€ ë™ì¼í•œ ì´ë¦„ì˜ ì´ë¯¸ì§€ë¥¼ ê°€ì ¸ì˜¤ë„ë¡ ì„¤ì •
+                Sprite loadedSprite2 = Resources.Load<Sprite>(CardImgname2);// CardImgname2ì™€ ë™ì¼í•œ ì´ë¦„ì˜ ì´ë¯¸ì§€ë¥¼ ê°€ì ¸ì˜¤ë„ë¡ ì„¤ì •
+
+                ProfileImg1.GetComponent<Image>().sprite = loadedSprite;
+                ProfileImg2.GetComponent<Image>().sprite = loadedSprite2;
+                Name.text = name + member.Name + '\n' + mbtiType + member.Mbti; // ì´ë¦„ MBTI ì´ë¦„ ì„¤ì • ì§€ì •
+                ProfileText.text = member.Txt; // í…ìŠ¤íŠ¸ ì„¤ì • ì§€ì •
+
+                Debug.Log(CardImgname2);
+                Debug.Log($"Num: {member.Num}, Name: {member.Name}, Mbti: {member.Mbti}, Txt: { member.Txt}");
+
+            }
+
+        }
+    }
+
 
     public void Close()
 
     {
-
-        ProfileBox.SetActive(false); // ´İ±â ¹öÆ° Å¬¸¯½Ã ÇÁ·ÎÇÊ UI ´İ±â
+        ProfileBox.SetActive(false); // ë‹«ê¸° ë²„íŠ¼ í´ë¦­ì‹œ í”„ë¡œí•„ UI ë‹«ê¸°
 
     }
 }

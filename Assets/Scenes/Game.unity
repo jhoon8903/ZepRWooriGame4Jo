@@ -3338,7 +3338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4544005727687803394
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3410,6 +3410,7 @@ MonoBehaviour:
   ProfileImg2: {fileID: 4544005726615018710}
   Name: {fileID: 2115548416737537239}
   ProfileText: {fileID: 3806349830726218338}
+  CardTypematch: 10
 --- !u!222 &4544005727687803404
 CanvasRenderer:
   m_ObjectHideFlags: 0
