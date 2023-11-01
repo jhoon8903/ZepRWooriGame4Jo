@@ -3149,7 +3149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &4544005727234727333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3372,7 +3372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de4f5cd2f30049978f1eda4a6946312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProfileBox: {fileID: 4544005727687803393}
+  ProfileBox: {fileID: 4544005727234727332}
   ProfileImg1: {fileID: 4544005727694560127}
   ProfileImg2: {fileID: 4544005726615018710}
   Name: {fileID: 2115548416737537239}
