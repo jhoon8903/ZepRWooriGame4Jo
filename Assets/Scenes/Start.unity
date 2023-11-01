@@ -665,7 +665,7 @@ GameObject:
   - component: {fileID: 1770368946}
   m_Layer: 0
   m_Name: LoopObjcet
-  m_TagString: Untagged
+  m_TagString: LoopObjcet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -685,7 +685,7 @@ MonoBehaviour:
   profile: {fileID: 8417980761205948424, guid: 38da367cc19a7e14daae0da53ede5d2f, type: 3}
   strBtn: {fileID: 1603756486}
   audioSource: {fileID: 1770368946}
-  clip: {fileID: 8300000, guid: 9fbaee77848ecf9439e49028ba0186ec, type: 3}
+  clip: {fileID: 8300000, guid: a4a02e4ce12ad3549bce1d44edd7f08e, type: 3}
 --- !u!4 &1770368945
 Transform:
   m_ObjectHideFlags: 0
@@ -714,7 +714,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.483
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
