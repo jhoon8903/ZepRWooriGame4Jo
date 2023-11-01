@@ -8,9 +8,14 @@ public class StartScene : MonoBehaviour
 {
     public GameObject profile;
     public GameObject strBtn;
+    public AudioSource audioSource;
+    public AudioClip clip;
 
     void Start()
-    {
+    {   //AudioSource의 clip에 접근하여 음악 넣어주기
+        audioSource.clip = clip;
+        //Start문에서 한번 실행하여 계속 재생하게 만들기
+        audioSource.Play();
         for (int i = 0; i < 6; i++)
         {
             GameObject newProfile = Instantiate(profile);
@@ -23,10 +28,9 @@ public class StartScene : MonoBehaviour
             else
                 newProfile.transform.position = new Vector3(x, -0.4f, 0);
 
-            //image이름 저장
-            string imageName = "rtan" + i.ToString();
             //newProfile의 자식을 찾고 자식의 SpriteRenderer의 sprite 변경해주기
-            newProfile.transform.Find("Image").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(imageName);
+            newProfile.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(i.ToString());
+
         }
         //strBtn을 Button의 btn으로 연결시켜 사용
         Button btn = strBtn.transform.GetComponent<Button>();
