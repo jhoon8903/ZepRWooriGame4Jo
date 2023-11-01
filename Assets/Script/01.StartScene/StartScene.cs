@@ -1,44 +1,65 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StartScene : MonoBehaviour
+namespace Script._01.StartScene
 {
-    public GameObject profile;
-    public GameObject strBtn;
-    public AudioSource audioSource;
-    public AudioClip clip;
-    private void Awake()
+    public class StartScene : MonoBehaviour
     {
-        //strBtnÀ» ButtonÀÇ btnÀ¸·Î ¿¬°á½ÃÄÑ »ç¿ë
-        Button btn = strBtn.transform.GetComponent<Button>();
-        //AddListener(ÇÔ¼ö)¸¦ »ç¿ëÇÏ¿© ¹öÆ°¿¡ ÇÔ¼ö ¿¬°á
-        btn.onClick.AddListener(startBtn);
-        //AudioSourceÀÇ clip¿¡ Á¢±ÙÇÏ¿© À½¾Ç ³Ö¾îÁÖ±â
-        audioSource.clip = clip;
-        //Start¹®¿¡¼­ ÇÑ¹ø ½ÇÇàÇÏ¿© °è¼Ó Àç»ıÇÏ°Ô ¸¸µé±â
-        audioSource.Play();
-        for (int i = 0; i < 6; i++)
+        public GameObject profile;
+        public GameObject strBtn;
+        public AudioSource audioSource;
+        public AudioClip clip;
+        private void Awake()
         {
-            GameObject newProfile = Instantiate(profile);
-            //¹Ì¸® »ı¼ºÇØµĞ ºÎ¸ğ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½ÄÀ¸·Î »ı¼ºÇÏ±â À§ÇÑ ÄÚµå
-            newProfile.transform.parent = GameObject.FindWithTag("LoopObjcet").transform;
-            float x = (i % 7) * 3.5f - 7f;
-            //Â¦¼ö¿Í È¦¼ö »ı¼º À§Ä¡
-            if (i % 2 == 0)
-                newProfile.transform.position = new Vector3(x, 0.4f, 0);
-            else
-                newProfile.transform.position = new Vector3(x, -0.4f, 0);
+            //strBtnï¿½ï¿½ Buttonï¿½ï¿½ btnï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+            Button btn = strBtn.transform.GetComponent<Button>();
+            //AddListener(ï¿½Ô¼ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+            btn.onClick.AddListener(() =>
+            {
+                // by ì •í›ˆ
+                // Start ë²„íŠ¼ í´ë¦­ì‹œ ì‚¬ìš´ë“œ ì¬ìƒì„ ìœ„í•´ ì½”ë£¨í‹´ í˜¸ì¶œ
+                StartCoroutine(WaitForTime());
+            });
+            //AudioSourceï¿½ï¿½ clipï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö±ï¿½
+            audioSource.clip = clip;
+            //Startï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+            audioSource.Play();
+            for (int i = 0; i < 6; i++)
+            {
+                GameObject newProfile = Instantiate(profile);
+                //ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
+                newProfile.transform.parent = GameObject.FindWithTag("LoopObjcet").transform;
+                float x = (i % 7) * 3.5f - 7f;
+                //Â¦ï¿½ï¿½ï¿½ï¿½ È¦ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+                if (i % 2 == 0)
+                    newProfile.transform.position = new Vector3(x, 0.4f, 0);
+                else
+                    newProfile.transform.position = new Vector3(x, -0.4f, 0);
 
-            //newProfileÀÇ ÀÚ½ÄÀ» Ã£°í ÀÚ½ÄÀÇ SpriteRendererÀÇ sprite º¯°æÇØÁÖ±â
-            newProfile.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(i.ToString());
+                //newProfileï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ SpriteRendererï¿½ï¿½ sprite ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
+                newProfile.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(i.ToString());
 
+            }
         }
-    }
-    public void startBtn()
-    {   //SceneManager¸¦ ÀÌ¿ëÇÏ¿© Scene ºÒ·¯¿À±â
-        SceneManager.LoadScene("Game");
+
+        private IEnumerator WaitForTime()
+        {
+            // by ì •í›ˆ
+            // ì‚¬ìš´ë“œ ì¬ìƒ
+            strBtn.GetComponent<AudioSource>().Play();
+            // ë²„íŠ¼ ëˆ„ë¥´ê³  ëŒ€ê¸° ì‹œê°„ ì§€ì • 0.5ì´ˆ
+            yield return new WaitForSeconds(0.3f);
+            StartBtn();
+        }
+
+        // by ì •í›ˆ
+        // ë©”ì†Œë“œ ì„ ì–¸ì€ ì²« ë¬¸ìëŠ” ë¬´ì¡°ê±´ UpperCase
+        private static void StartBtn()
+        {
+            //SceneManagerï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï¿ï¿½ Scene ï¿½Ò·ï¿½ï¿½ï¿½ï¿½
+            SceneManager.LoadScene("Game");
+        }
     }
 }

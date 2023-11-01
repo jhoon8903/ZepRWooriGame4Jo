@@ -643,6 +643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   card: {fileID: 9189366838597433558, guid: 378fdffcf278bf64a9fec7c6cbb685b6, type: 3}
+  firstCard: {fileID: 0}
+  secondCard: {fileID: 0}
 --- !u!4 &349987556
 Transform:
   m_ObjectHideFlags: 0
@@ -3149,7 +3151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &4544005727234727333
 MonoBehaviour:
   m_ObjectHideFlags: 0
