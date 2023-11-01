@@ -101,4 +101,10 @@ public class Profile : MonoBehaviour
         ProfileBox.SetActive(false); // 닫기 버튼 클릭시 프로필 UI 닫기
 
     }
+
+    private void Start()
+    {
+
+        ProfileBox.SetActive(false);
+    }
 }
