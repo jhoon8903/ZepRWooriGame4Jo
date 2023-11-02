@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - LoopObjcet
+  - Easy
+  - Normal
+  - Hard
   layers:
   - Default
   - TransparentFX
