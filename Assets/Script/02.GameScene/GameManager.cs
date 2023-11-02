@@ -22,7 +22,9 @@ namespace Script._02.GameScene
         
 
         private void Awake()
-        {
+        {   
+            //게임 난이도에 따라 maxCount 변경
+            maxCount = PlayerPrefs.GetInt("Level");
             // GameManager SingleTon
             if (Instance == null)
             {
