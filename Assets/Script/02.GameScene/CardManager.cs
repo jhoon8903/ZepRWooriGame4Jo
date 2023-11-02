@@ -69,7 +69,6 @@ namespace Script._02.GameScene
                 Card newCard = Instantiate(cardPrefab, transform, true);
                 newCard.transform.position = transform.position;
                 newCard.character.name = character[i].ToString();
-                Debug.Log($"MemberName : {newCard.character.name}");
                 newCard.character.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newCard.character.name);
                 newCard.character.SetActive(false);
                 newCard.gameObject.SetActive(false);

@@ -108,8 +108,8 @@ namespace Script._02.GameScene
                     Name.text = name + member.Name + '\n' + mbtiType + member.Mbti; // 이름 MBTI 이름 설정 지정
                     ProfileText.text = member.Txt; // 텍스트 설정 지정
 
-                    Debug.Log(CardImgname2);
-                    Debug.Log($"Num: {member.Num}, Name: {member.Name}, Mbti: {member.Mbti}, Txt: { member.Txt}");
+                    // Debug.Log(CardImgname2);
+                    // Debug.Log($"Num: {member.Num}, Name: {member.Name}, Mbti: {member.Mbti}, Txt: { member.Txt}");
 
                 }
             }
