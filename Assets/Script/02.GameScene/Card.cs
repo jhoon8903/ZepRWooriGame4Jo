@@ -151,9 +151,11 @@ namespace Script._02.GameScene
                         //    StartCoroutine(GameManager.Instance.End());
                         //}
                         //Updata 부분으로 이동 by 정선교
-                        _isFliping = false;
+                        
                     }
+                    _isFliping = false;
                 });
+         
         }
 
 
