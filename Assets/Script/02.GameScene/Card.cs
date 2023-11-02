@@ -24,8 +24,7 @@ namespace Script._02.GameScene
          */
         private const float MinClickSpeed = 0.5f;
         private float _lastClick = 0f;
-
-      
+        private bool _isFliping;
 
         private void Awake()
         {
@@ -98,6 +97,12 @@ namespace Script._02.GameScene
 
         private void OpenCard(Card selectCard)
         {
+            if (_isFliping)
+            {
+                return;
+            }
+
+            _isFliping = true;
             
             // Debug.Log("OpenCard");
             CardManager.Instance.cardFlipCount++;
@@ -146,11 +151,9 @@ namespace Script._02.GameScene
                         //    StartCoroutine(GameManager.Instance.End());
                         //}
                         //Updata 부분으로 이동 by 정선교
-
+                        _isFliping = false;
                     }
                 });
-            
-
         }
 
 
