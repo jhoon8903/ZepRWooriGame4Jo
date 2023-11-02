@@ -737,6 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58950d58dbf54a3d9d1a1b013e34376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SuccessTxt: {fileID: 620636848}
   profile: {fileID: 4544005727234727336}
   memberList:
   - memberNumber: 0
@@ -2084,7 +2085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 530, y: -200}
   m_SizeDelta: {x: 700, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1268130187
