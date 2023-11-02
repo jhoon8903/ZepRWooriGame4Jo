@@ -97,10 +97,8 @@ namespace Script._02.GameScene
 
         private void OpenCard(Card selectCard)
         {
-            if (_isFliping)
-            {
-                return;
-            }
+            if (CardManager.Instance.isShuffling) return;
+            if (_isFliping)return;
 
             _isFliping = true;
             

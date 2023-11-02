@@ -35,6 +35,8 @@ namespace Script._02.GameScene
          */
         public static CardManager Instance;
 
+        public bool isShuffling;
+
         [SerializeField] private MemberCheck memberCheck;
 
         private void Awake()
@@ -74,12 +76,13 @@ namespace Script._02.GameScene
                 newCard.gameObject.SetActive(false);
                 _cardList.Add(newCard);
             }
-
-           
         }
 
         public void ShuffleCard()
         {
+            isShuffling = true;
+            int cardsMoved = 0;
+
             /*
              * by 정훈
              * 카드 생성시 한 지점에서 목표 지점으로 카드가 날아가는 움직임 구현
@@ -97,7 +100,15 @@ namespace Script._02.GameScene
                 DOVirtual.DelayedCall(i * delay, () =>
                 {
                     card.gameObject.SetActive(true);
-                    card.transform.DOMove(targetPosition, duration);
+                    card.transform.DOMove(targetPosition, duration).OnComplete(() =>
+                    {
+                        cardsMoved++; // 이동을 완료한 카드 수를 증가시킵니다.
+
+                        if (cardsMoved == _cardList.Count) // 모든 카드가 이동을 완료했는지 확인합니다.
+                        {
+                            isShuffling = false; // 모든 카드의 이동이 완료되면 isShuffling을 false로 설정합니다.
+                        }
+                    });
                 });
             }
 
@@ -108,7 +119,7 @@ namespace Script._02.GameScene
              * 객체 지향을 통해 Find 메소드를 삭제하여 리소스 최적화
              * Find 메소드가 반복적으로 호출 되면 리소스 사용량에 지대한 영향을 끼침
              */
-                // string charName = "character" + charactor[i];
+            // string charName = "character" + charactor[i];
         }
         /*
          * by 정훈
