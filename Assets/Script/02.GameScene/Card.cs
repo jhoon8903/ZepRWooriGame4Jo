@@ -19,6 +19,11 @@ namespace Script._02.GameScene
         public Sprite frontSprite;
         public GameObject character;
         private AudioSource _flipSound;
+        /*
+         * 빠르게 선택시 카드가 중복되는 버그를 방지 하기위한 안정장치 설정
+         */
+        private const float MinClickSpeed = 0.5f;
+        private float _lastClick = 0f;
 
       
 
@@ -37,6 +42,13 @@ namespace Script._02.GameScene
 
             if (Input.GetMouseButtonDown(0)) // left mouse button
             {
+                if (Time.time - _lastClick < MinClickSpeed)
+                {
+                    return;
+                }
+
+                _lastClick = Time.time;
+
                 if (CardManager.Instance.cardFlipCount >=2) return;
                 Vector2 rayPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f);
@@ -87,7 +99,7 @@ namespace Script._02.GameScene
         private void OpenCard(Card selectCard)
         {
             
-            Debug.Log("OpenCard");
+            // Debug.Log("OpenCard");
             CardManager.Instance.cardFlipCount++;
             /*
              * by 정훈
@@ -110,7 +122,6 @@ namespace Script._02.GameScene
                 .SetEase(Ease.Linear)
                 .OnUpdate(() =>
                 {
-              
                     if (transform.rotation.eulerAngles.y >= 90)
                     {
                         card.GetComponent<SpriteRenderer>().sprite = frontSprite;
@@ -120,12 +131,10 @@ namespace Script._02.GameScene
                 {
                     if (CardManager.Instance.FirstSelectCard == null)
                     {
-                        Debug.Log(111);
                         CardManager.Instance.FirstSelectCard = selectCard;
                     }
                     else if (CardManager.Instance.FirstSelectCard != null && CardManager.Instance.SecondSelectCard == null)
                     {
-                        Debug.Log(222);
                         CardManager.Instance.SecondSelectCard = selectCard;
                         GameManager.Instance.selectScore++;
                         GameManager.Instance.currentCount--;

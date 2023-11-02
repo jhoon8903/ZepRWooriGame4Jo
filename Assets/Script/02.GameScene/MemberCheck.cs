@@ -128,7 +128,7 @@ namespace Script._02.GameScene
                     profile.ProfileOpen(member.memberNumber);
 
                     memberCount++; // 조건이 충족될 때마다 카운트를 증가시킴 by 선교
-                    Debug.Log($"menbercount : {memberCount}");
+                    // Debug.Log($"menbercount : {memberCount}");
 
                     // Profile GameObject의 활성화 상태를 확인
                     
