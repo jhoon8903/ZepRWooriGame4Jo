@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /*
@@ -13,6 +14,8 @@ namespace Script._02.GameScene
 {
     public class MemberCheck : MonoBehaviour
     {
+        public GameObject SuccessTxt;
+        int memberCount = 0; //멤버체크완료 카운트 by 선교
         [Serializable]
         public class NameTag
         {
@@ -46,6 +49,25 @@ namespace Script._02.GameScene
             {
                 member.checker.gameObject.SetActive(false);
             }
+        }
+        private void Update()
+        {
+            bool isProfileActive = profile.gameObject.activeSelf;
+
+            if (memberCount >= 6 && !isProfileActive && !SuccessTxt.gameObject.activeSelf) // Profile가 비활성화 상태일 때
+            {
+                
+                SuccessTxt.SetActive(true);
+
+                StartCoroutine(DelayedAction());
+            }
+            
+        }
+        IEnumerator DelayedAction()
+        {
+            yield return new WaitForSecondsRealtime(3f); // 3초 동안 일시 중지
+            SceneManager.LoadScene("EndScene");
+
         }
 
         // ���� ī�尡 ��������, �̸��� ǥ��
@@ -92,7 +114,7 @@ namespace Script._02.GameScene
 
         private void Checker(int nameNumber)
         {
-            int memberCount = 0; //멤버체크완료 카운트 by 선교
+           
             /*
              * by 정훈
              * 멤버 리스트 중 memberNumber가 동일한 오브젝트만 컬러 및 체커 활성화
@@ -106,14 +128,15 @@ namespace Script._02.GameScene
                     profile.ProfileOpen(member.memberNumber);
 
                     memberCount++; // 조건이 충족될 때마다 카운트를 증가시킴 by 선교
+                    Debug.Log($"menbercount : {memberCount}");
 
-                    if (memberCount >= 6)
-                    {
-                        // 6개 이상의 조건이 충족되었을 때 시그널을 받도록 처리 by 선교
-                        // 여기에 원하는 동작을 추가하십시오.
-                    }
+                    // Profile GameObject의 활성화 상태를 확인
+                    
                 }
             }
+            
         }
     }
+
+
 }
