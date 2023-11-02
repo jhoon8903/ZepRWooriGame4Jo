@@ -9,6 +9,7 @@ using UnityEngine.UI;
  * name Space 적용
  */
 namespace Script._02.GameScene
+
 {
     public class MemberCheck : MonoBehaviour
     {
@@ -91,6 +92,7 @@ namespace Script._02.GameScene
 
         private void Checker(int nameNumber)
         {
+            int memberCount = 0; //멤버체크완료 카운트 by 선교
             /*
              * by 정훈
              * 멤버 리스트 중 memberNumber가 동일한 오브젝트만 컬러 및 체커 활성화
@@ -102,6 +104,14 @@ namespace Script._02.GameScene
                     member.checkerBox.GetComponent<Image>().color = new Color(0.0392f, 1f, 0f, 1f);
                     member.checker.gameObject.SetActive(true);
                     profile.ProfileOpen(member.memberNumber);
+
+                    memberCount++; // 조건이 충족될 때마다 카운트를 증가시킴 by 선교
+
+                    if (memberCount >= 6)
+                    {
+                        // 6개 이상의 조건이 충족되었을 때 시그널을 받도록 처리 by 선교
+                        // 여기에 원하는 동작을 추가하십시오.
+                    }
                 }
             }
         }

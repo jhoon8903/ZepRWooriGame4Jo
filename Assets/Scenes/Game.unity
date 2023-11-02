@@ -2732,7 +2732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftCountText: {fileID: 1869551361}
   selectCountText: {fileID: 711435150}
-  maxCount: 10
+  maxCount: 20
   currentCount: 0
   selectScore: 0
   highScore: 0

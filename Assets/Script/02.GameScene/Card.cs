@@ -29,8 +29,12 @@ namespace Script._02.GameScene
 
         void Update()
         {
-           
-            
+            // 카운트 '0'되면 즉시 게임 종료
+            if (GameManager.Instance.currentCount <= 0)
+            {
+                StartCoroutine(GameManager.Instance.End());
+            }
+
             if (Input.GetMouseButtonDown(0)) // left mouse button
             {
                 if (CardManager.Instance.cardFlipCount >=2) return;
@@ -81,7 +85,8 @@ namespace Script._02.GameScene
 
 
         private void OpenCard(Card selectCard)
-        { 
+        {
+            
             Debug.Log("OpenCard");
             CardManager.Instance.cardFlipCount++;
             /*
@@ -115,24 +120,30 @@ namespace Script._02.GameScene
                 {
                     if (CardManager.Instance.FirstSelectCard == null)
                     {
+                        Debug.Log(111);
                         CardManager.Instance.FirstSelectCard = selectCard;
                     }
                     else if (CardManager.Instance.FirstSelectCard != null && CardManager.Instance.SecondSelectCard == null)
                     {
-                        
+                        Debug.Log(222);
                         CardManager.Instance.SecondSelectCard = selectCard;
                         GameManager.Instance.selectScore++;
                         GameManager.Instance.currentCount--;
                         GameManager.Instance.UpdateText();
                         StartCoroutine(DelayedIsMatched());
-                        if (GameManager.Instance.currentCount <= 0)
-                        {
-                            StartCoroutine(GameManager.Instance.End());
-                        }
+                        
+                        //if (GameManager.Instance.currentCount <= 0)
+                        //{
+                        //    StartCoroutine(GameManager.Instance.End());
+                        //}
+                        //Updata 부분으로 이동 by 정선교
+
                     }
                 });
-     
+            
+
         }
+
 
         private IEnumerator DelayedIsMatched()
         {
