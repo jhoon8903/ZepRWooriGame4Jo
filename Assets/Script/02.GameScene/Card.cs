@@ -153,7 +153,6 @@ namespace Script._02.GameScene
                     }
                     _isFliping = false;
                 });
-         
         }
 
 
